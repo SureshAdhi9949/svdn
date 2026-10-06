@@ -136,3 +136,170 @@ h2:after{content:'';display:block;width:90px;height:5px;border-radius:5px;backgr
 @media(max-width:700px){.mapw iframe{height:340px}.mcard{position:static;max-width:none;margin:8px 4px 4px}.mapw{padding:6px}}
 .tc{min-height:300px}.ts p{font-style:italic;line-height:1.7}.faq .fa p{line-height:1.7}
 @media(max-width:700px){.tc{min-height:400px}.ts p{font-size:1.05rem}}
+
+
+
+
+/* Mobile and tablet layout fixes — append to the end of the file */
+@media (max-width: 900px) {
+  .hero {
+    min-height: auto;
+    padding: 112px 6vw 76px;
+  }
+
+  .hero-i {
+    height: clamp(280px, 55vw, 400px);
+  }
+
+  .split {
+    gap: 34px;
+  }
+
+  .stats {
+    gap: 12px;
+    margin: -38px 5vw 0;
+  }
+
+  .stat {
+    padding: 18px 12px;
+  }
+
+  .stat b {
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+  }
+
+  .form-w {
+    gap: 20px;
+  }
+
+  .foot {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sec {
+    padding: 58px 5vw;
+  }
+
+  .nav {
+    padding: 12px 4vw;
+    gap: 12px;
+  }
+
+  .nav nav {
+    inset: 0 0 0 15%;
+    padding: 30px;
+  }
+
+  .hero {
+    padding: 108px 5vw 68px;
+    gap: 24px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.35rem, 11vw, 3.6rem);
+  }
+
+  .hero h2 {
+    font-size: 1.08rem;
+  }
+
+  .hero .row > a {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  .hero-i {
+    height: 290px;
+  }
+
+  .stats {
+    margin: -28px 4vw 0;
+    gap: 10px;
+  }
+
+  .stat {
+    padding: 16px 8px;
+    border-radius: 16px;
+  }
+
+  .stat small {
+    font-size: 0.78rem;
+  }
+
+  .collage {
+    height: 300px;
+  }
+
+  .rail {
+    gap: 14px;
+  }
+
+  .card {
+    flex-basis: min(78vw, 280px);
+    height: 340px;
+  }
+
+  .mas {
+    grid-auto-rows: clamp(110px, 34vw, 160px);
+    gap: 8px;
+  }
+
+  .g button {
+    border-radius: 14px;
+  }
+
+  .form-w {
+    grid-template-columns: 1fr;
+  }
+
+  form {
+    padding: 20px;
+  }
+
+  .loc {
+    padding: 26px;
+  }
+
+  .tc {
+    min-height: 420px;
+  }
+
+  .ts {
+    inset: 70px 0 auto;
+  }
+
+  .lb .p {
+    left: 8px;
+  }
+
+  .lb .n {
+    right: 8px;
+  }
+
+  .lbi {
+    width: 94vw;
+    height: 58vh;
+  }
+
+  .foot {
+    grid-template-columns: 1fr 1fr;
+    padding: 44px 5vw 20px;
+    gap: 22px 16px;
+  }
+}
+
+@media (max-width: 380px) {
+  .logo span {
+    font-size: 0.76rem;
+  }
+
+  .lg {
+    height: 34px;
+  }
+
+  .foot {
+    grid-template-columns: 1fr;
+  }
+}
