@@ -1,5 +1,5 @@
 import {useEffect,useRef,useState} from 'react';
-import {img,PHONE,MAIL,STATS,CATS,TEST,FAQ} from './data.js';
+import {img,PHONE,MAIL,CATS,TEST,FAQ} from './data.js';
 
 function useInView(){const r=useRef(),[v,s]=useState(false);
  useEffect(()=>{const o=new IntersectionObserver(([e])=>e.isIntersecting&&(s(true),o.disconnect()),{threshold:.15});o.observe(r.current);return()=>o.disconnect()},[]);return[r,v]}
@@ -12,22 +12,46 @@ const Counter=({to,label})=>{const[r,v]=useInView(),[n,s]=useState(0);
 
 function Nav(){const[sc,setSc]=useState(false),[o,setO]=useState(false);
  useEffect(()=>{const f=()=>setSc(scrollY>40);addEventListener('scroll',f,{passive:true});return()=>removeEventListener('scroll',f)},[]);
- const L=['Home','About','Plants','Infrastructure','Gallery','Contact','Location'];
+ const L=[['Home','home'],['About Us','about'],['Plants','plants'],['Infrastructure','infrastructure'],['Gallery','gallery'],['Contact','contact']];
  return <header className={`nav ${sc?'sc':''}`}><a href="#home" className="logo"><img className="lg" src="/img/logo.webp" alt="SVDN logo since 1948"/><span>Sri Vijaya Durga <b>Nursery</b></span></a>
- <nav className={o?'open':''}>{L.map(l=><a key={l} onClick={()=>setO(false)} href={'#'+l.toLowerCase()}>{l}</a>)}</nav>
+ <nav className={o?'open':''}>{L.map(([l,id])=><a key={id} onClick={()=>setO(false)} href={'#'+id}>{l}</a>)}</nav>
  <a className="btn sm" href="#contact">Get Bulk Quote</a><a className="call" href={'tel:'+PHONE.replace(/\s/g,'')}>📞</a>
  <button className={`burger ${o?'x':''}`} onClick={()=>setO(!o)} aria-label="menu"><span/><span/><span/></button></header>}
 
-const Hero=()=><section id="home" className="hero"><div className="hbg" style={{backgroundImage:`url(${img('hero-1')})`}}/><div className="hov"/><i className="ray"/><i className="ray r2"/>{Array.from({length:14},(_,i)=><b key={i} className="bk" style={{'--x':(i*37)%100+'%','--y':(i*53)%100+'%','--s':20+i%4*14+'px','--h':['#a6e22e','#ffb830','#ff5d8f','#fff'][i%4],'--dl':-i*.9+'s'}}/>)}
- {Array.from({length:12},(_,i)=><i key={i} className="leaf" style={{'--x':i*8.5+'%','--t':8+i%5*2+'s','--dl':-i*1.3+'s'}}>🍃</i>)}
- <div className="hero-t"><span className="badge">ESTABLISHED 1948</span>
- <h1><span>Growing Green.</span><span>Delivering Life.</span></h1>
- <h2>Wholesale Plant Nursery in Andhra Pradesh</h2>
- <p>Supplying fruit plants, ornamental plants and avenue trees across India with complete transport logistics.</p>
- <div className="row"><a className="btn" href="#plants">Explore Plants</a><a className="btn ghost" href="#contact">Request Bulk Quote</a></div></div>
- <div className="hero-i"><Ph n="hero-2" cls="c1"/><Ph n="hero-3" cls="c2"/><Ph n="about-2" cls="c3"/><div className="orb"/></div><Leaf c="#a6e22e" cls="d1"/><Flower c="#ff5d8f" cls="d2"/><Flower c="#ffb830" cls="d3"/></section>;
+const Hero=()=><section id="home" className="hero">
+ <div className="hbg" style={{backgroundImage:"url('/img/hero-reference.webp')"}}/>
+ <img className="hero-foliage hero-foliage-left" src="/img/hero-foliage-left.webp" alt="" aria-hidden="true"/>
+ <img className="hero-foliage hero-foliage-right" src="/img/hero-foliage-right.webp" alt="" aria-hidden="true"/>
+ <div className="hero-t">
+  <h1><span>GROW</span><span>SOMETHING</span><span className="hero-script-line">Beautiful</span></h1>
+  <p>Supplying premium quality planting material for farms, landscaping, government projects and large-scale plantations across India.</p>
+  <div className="row hero-actions"><a className="btn" href="#plants">Explore Plants</a><a className="btn ghost" href="#contact">Visit Our Nursery</a></div>
+  <div className="hero-benefits">
+   <div><i>♧</i><span><b>Fruit Plants</b><small>High Yield & Quality</small></span></div>
+   <div><i>❀</i><span><b>Ornamental Plants</b><small>For Beautiful Spaces</small></span></div>
+   <div><i>♣</i><span><b>Avenue Trees</b><small>Green & Sustainable</small></span></div>
+  </div>
+ </div>
+ <div className="hero-showcase">
+  <div className="hero-stack">
+  <Ph n="hero-1" cls="show-main"/>
+   <Ph n="about-2" cls="show-fruit"/>
+   <Ph n="cat-1" cls="show-small"/>
+   <div className="hero-script">Healthy Plants<br/>Greener Tomorrow <span>↗</span></div>
+   <div className="show-badge badge-quality"><i>♧</i><span><b>Premium Quality</b><small>Healthy & Disease Free</small></span></div>
+   <div className="show-badge badge-delivery"><i>♧</i><span><b>Pan India Delivery</b><small>Safe & On Time</small></span></div>
+   <div className="show-badge badge-farmers"><i>♧</i><span><b>Trusted by Farmers</b><small>Since 1948</small></span></div>
+  </div>
+ </div>
+</section>;
 
-const Stats=()=><section className="stats">{STATS.map(([n,l,x],i)=><Rev key={l} d={i*120} cls="stat"><b><Counter to={n} label={x}/></b><small>{l}</small></Rev>)}</section>;
+const STAT_ITEMS=[
+ [1200000,'Saplings / Year','12L+','♧'],
+ [0,'Delivery Network','Pan India','⌖'],
+ [1700,'Farmers Network',null,'♣'],
+ [75,'Years Experience',null,'✿']
+];
+const Stats=()=><section className="stats">{STAT_ITEMS.map(([n,l,x,icon],i)=><Rev key={l} d={i*100} cls="stat"><i className="stat-icon">{icon}</i><span className="stat-copy"><b>{i===1?x:<Counter to={n} label={x}/>}</b><small>{l}</small></span></Rev>)}</section>;
 
 const Leaf=({c,cls=''})=><svg className={`deco ${cls}`} viewBox="0 0 64 64" style={{fill:c}}><path d="M32 58C32 30 44 14 58 8 56 30 48 50 32 58Zm0 0C30 40 20 28 6 24c2 18 12 30 26 34Z"/></svg>;
 const Flower=({c,cls=''})=><svg className={`deco ${cls}`} viewBox="0 0 64 64" style={{fill:c}}>{[0,72,144,216,288].map(r=><ellipse key={r} cx="32" cy="16" rx="9" ry="14" transform={`rotate(${r} 32 32)`}/>)}<circle cx="32" cy="32" r="7" fill="#ffd43b"/></svg>;
@@ -36,9 +60,9 @@ function Fx(){useEffect(()=>{const r=document.documentElement,m=e=>{r.style.setP
  addEventListener('mousemove',m,{passive:true});addEventListener('scroll',sc,{passive:true});return()=>{removeEventListener('mousemove',m);removeEventListener('scroll',sc)}},[]);return <><div className="prog"/><div className="glow"/></>}
 const Wave=({flip})=><svg className={`wave ${flip?'flip':''}`} viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0 40C240 100 480 0 720 40s480 60 720 0V80H0Z"/></svg>;
 
-const About=()=><section id="about" className="split sec"><Flower c="#ff7a45" cls="d8"/><Rev cls="collage"><Ph n="about-1" cls="a1"/><Ph n="about-2" cls="a2"/><div className="seal">1948</div></Rev>
- <Rev d={150}><h2>A Legacy of Greenery Since 1948</h2>
- <p>Started by Sri. Ravipati Suranna in 1948 and named “Sri Vijaya Durga Nursery” in 1962, we are located in the famous nursery hub of Kadiyapulanka near Rajahmundry — among the top wholesale plant suppliers in India.</p>
+const About=()=><section id="about" className="split sec"><Flower c="#ff7a45" cls="d8"/><Rev cls="collage"><Ph n="hero-1" cls="a1"/><Ph n="about-2" cls="a2"/><div className="seal">1948</div></Rev>
+ <Rev d={150}><h2>Rooted in Nature, Growing for a Better Future</h2>
+ <p>Sri Vijaya Durga Nursery is a leading wholesale plant nursery in Andhra Pradesh, committed to providing high-quality planting material for a greener and healthier tomorrow.</p>
  <div className="pills">{['🚚 Pan-India Bulk Delivery','🌳 Massive Acreage & Stock','✅ Disease-Free Saplings'].map((t,i)=><Rev key={t} d={300+i*150} cls="pill">{t}</Rev>)}</div></Rev></section>;
 
 const Plants=()=><section id="plants" className="sec cream"><Rev><h2 className="c">Explore Our Green Collection</h2><p className="c sub">India's finest wholesale plant collections.</p></Rev>
@@ -55,12 +79,14 @@ const India=()=><section className="sec"><Rev><h2 className="c">From Kadiyapulan
 const Infra=()=><section id="infrastructure" className="sec cream"><Rev><h2 className="c">Advanced Nursery Infrastructure & Transport</h2><p className="c sub">Our expansive facilities in Kadiyapulanka utilize modern shade nets, drip irrigation, and scientifically formulated potting mixes to ensure maximum plant survival rates.</p></Rev>
  <div className="g3">{['Shade Nets','Drip Irrigation','Scientifically Formulated Potting Mixes'].map((t,i)=><Rev key={t} d={i*150} cls="ib"><Ph n={'infra-'+(i+1)}/><h3>{t}</h3></Rev>)}</div></section>;
 
-function Gallery(){const[o,setO]=useState(null),N=9,sz=['big','','tall','','wide','','','tall',''];
+const GALLERY_IMAGES=['gal-1','gal-2','gal-3','gal-4','gal-5','gal-6','gal-7','gal-8'];
+const GALLERY_ASPECTS=[597/335,547/365,335/597,600/400,547/244,638/480,337/149,386/518];
+function Gallery(){const[o,setO]=useState(null),N=GALLERY_IMAGES.length;
  useEffect(()=>{const k=e=>{if(o===null)return;e.key==='Escape'&&setO(null);e.key==='ArrowRight'&&setO((o+1)%N);e.key==='ArrowLeft'&&setO((o+N-1)%N)};addEventListener('keydown',k);return()=>removeEventListener('keydown',k)},[o]);
  return <section id="gallery" className="sec"><Rev><h2 className="c">Inside Sri Vijaya Durga Nursery</h2></Rev>
- <div className="mas">{Array.from({length:N},(_,i)=><Rev key={i} d={i*70} cls={`g ${sz[i]}`}><button onClick={()=>setO(i)} aria-label="open"><Ph n={'gal-'+(i+1)}/><span>⤢</span></button></Rev>)}</div>
+ <div className="mas">{GALLERY_IMAGES.map((photo,i)=><Rev key={photo} d={i*70} cls={`g gallery-item gallery-item-${i+1}`} st={{'--gallery-aspect':GALLERY_ASPECTS[i]}}><button onClick={()=>setO(i)} aria-label={`View nursery photo ${i+1}`}><img src={img(photo)} alt={`Sri Vijaya Durga Nursery photo ${i+1}`} loading="lazy" className="gallery-photo-image"/><span>⤢</span></button></Rev>)}</div>
  {o!==null&&<div className="lb" onClick={()=>setO(null)}><button className="x">✕</button><button className="p" onClick={e=>{e.stopPropagation();setO((o+N-1)%N)}}>‹</button>
- <Ph n={'gal-'+(o+1)} cls="lbi"/><button className="n" onClick={e=>{e.stopPropagation();setO((o+1)%N)}}>›</button><small>{o+1} / {N}</small></div>}</section>}
+ <img src={img(GALLERY_IMAGES[o])} alt={`Sri Vijaya Durga Nursery photo ${o+1}`} className="lbi"/><button className="n" onClick={e=>{e.stopPropagation();setO((o+1)%N)}}>›</button><small>{o+1} / {N}</small></div>}</section>}
 
 function Testi(){const[i,s]=useState(0),[h,sh]=useState(false);
  useEffect(()=>{if(h)return;const t=setInterval(()=>s(x=>(x+1)%TEST.length),5000);return()=>clearInterval(t)},[h]);
@@ -93,4 +119,8 @@ const Foot=()=><footer className="foot"><div><img className="lg ft" src="/img/lo
  <div><b>Contact</b><p>Kadiyapulanka, Rajahmundry,<br/>Andhra Pradesh - 533126</p><a href={'tel:'+PHONE.replace(/\s/g,'')}>{PHONE}</a><a href={'mailto:'+MAIL}>{MAIL}</a></div>
  <small>© 2026 Sri Vijaya Durga Nursery. All Rights Reserved.</small></footer>;
 
-export default()=><><Fx/><Nav/><Hero/><Stats/><Marquee/><Wave/><About/><Plants/><Wave flip/><Biz/><India/><Infra/><Gallery/><Testi/><Faq/><Contact/><MapSec/><Foot/></>;
+export default()=><><Fx/><Nav/><main className="home-board">
+ <div className="board-column board-primary"><Hero/><Stats/><Plants/><Biz/></div>
+ <div className="board-column board-secondary"><About/><Infra/><Gallery/><Testi/></div>
+ <div className="board-column board-wide"><India/><Faq/><Contact/><MapSec/></div>
+ </main><Foot/></>;
