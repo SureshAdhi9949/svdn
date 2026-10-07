@@ -95,6 +95,7 @@ textarea,.row{grid-column:1/-1}.loc{background:var(--forest);color:#fff;border-r
 :root{--teal:#19c6c6;--violet:#8e6bff;--rainbow:linear-gradient(90deg,#a6e22e,#ffb830,#ff5d8f,#8e6bff,#19c6c6)}
 .prog{position:fixed;top:0;left:0;height:4px;width:calc(var(--pg,0)*100%);background:var(--rainbow);z-index:100}
 .glow{position:fixed;left:var(--mx,-200px);top:var(--my,-200px);width:360px;height:360px;margin:-180px;border-radius:50%;background:radial-gradient(#a6e22e33,#ff5d8f1a 45%,transparent 70%);pointer-events:none;z-index:40;transition:left .15s,top .15s}
+.glow{display:none!important}
 h2{background:linear-gradient(90deg,var(--forest),var(--leaf) 60%,#e8590c);-webkit-background-clip:text;color:transparent}
 .dark h2{background:linear-gradient(90deg,#fff,var(--lime),var(--sun));-webkit-background-clip:text}
 h2:after{content:'';display:block;width:90px;height:5px;border-radius:5px;background:var(--rainbow);margin:14px 0 0;background-size:200%;animation:slide 4s linear infinite}.c:after{margin-left:auto;margin-right:auto}
@@ -2857,4 +2858,62 @@ form textarea {
   .board-secondary .gallery-item {
     border-radius: 7px;
   }
+}
+
+/* Defer off-screen photo decoding and keep decorative motion inexpensive. */
+.ph {
+  position: relative;
+  overflow: hidden;
+}
+
+.ph > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+  object-position: center;
+}
+
+.prog {
+  width: 100%;
+  transform: scaleX(var(--pg, 0));
+  transform-origin: left center;
+  will-change: transform;
+}
+
+.rev {
+  transition-duration: .4s;
+}
+
+h2::after,
+.dark h2::after {
+  animation: none;
+  background: var(--leaf);
+}
+
+.blobs::before,
+.blobs::after {
+  animation: none;
+  filter: blur(42px);
+}
+
+.grow,
+.seal,
+.pin {
+  animation: none;
+}
+
+.route {
+  animation: dash 2.4s linear infinite;
+}
+
+.pulse {
+  animation: pulse 2.6s ease-out infinite;
+}
+
+.mapw,
+.grad {
+  animation: none;
 }
